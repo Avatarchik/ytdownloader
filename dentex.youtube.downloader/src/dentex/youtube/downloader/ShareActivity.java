@@ -1221,8 +1221,8 @@ public class ShareActivity extends Activity {
         			if (sigMatcher4.find()) {
         				Utils.logger("d", "sig found on step 4 (s=)", DEBUG_TAG);
         				Log.i(DEBUG_TAG, "(s=) signature length: " + sigMatcher4.group(1).length());
-        				//String singleEs = parseSingleEsSig(sigMatcher4.group(1));
-        				String singleEs = signatureDecipher(sigMatcher4.group(1));
+        				String singleEs = parseSingleEsSig(sigMatcher4.group(1));
+        				//String singleEs = signatureDecipher(sigMatcher4.group(1));
         				sig = "signature=" + singleEs;
         			} else {
         				Log.e(DEBUG_TAG, "sig: " + sig);
@@ -1265,7 +1265,7 @@ public class ShareActivity extends Activity {
             arr.reverse();
             return(arr);
         }
-    }*/
+    }
     
     private String signatureDecipher(String sig) {
     	
@@ -1280,7 +1280,7 @@ public class ShareActivity extends Activity {
     private String[] clone(String[] sig, int pos) {
     	return Arrays.copyOfRange(sig, pos, sig.length);
     }
-    
+    */
     
     /*
      * parseSingleEsSig(...) and initialSigTransformation(...) methods
@@ -1289,7 +1289,7 @@ public class ShareActivity extends Activity {
      * by Gantt: http://userscripts.org/users/gantt
      */
     
-    /*private String parseSingleEsSig(String sig) {
+    private String parseSingleEsSig(String sig) {
 		if (sig.length() == 88) {
     		String[] sigA = sig.split("");
     		sigA = Arrays.copyOfRange(sigA, 2, sigA.length);
@@ -1329,10 +1329,12 @@ public class ShareActivity extends Activity {
     	}
     	
     	if (sig.length() == 83) {
-			String[] t = initialSigTransformation(sig, 43, 83, 2, 42);
-			sig=t[0].substring(30,31)+t[0].substring(1,27)+t[1].substring(39,40)+
-			        t[0].substring(28,30)+t[0].substring(0,1)+t[0].substring(31,40)+sig.substring(42,43)+
-			        t[1].substring(0,5)+t[0].substring(27,28)+t[1].substring(6,39)+t[1].substring(5,6);
+			String sigA = sig.substring(2, 42);
+		 	String sigB = sig.substring(43, 83);
+		 	sig=sigA.substring(4,5)+sigA.substring(1,4)+sigA.substring(31,32)+sigA.substring(5,22)+
+		 	sig.substring(0,1)+sigA.substring(23,31)+sigB.substring(10,11)+sigA.substring(32,40)+
+		 	sig.substring(42,43)+sigB.substring(0,10)+sigA.substring(22,23)+sigB.substring(11,40);
+		 	            
     	}
     	
     	if (sig.length() == 82) {
@@ -1353,7 +1355,7 @@ public class ShareActivity extends Activity {
 		sigB = reverseArray(sigB);
 		String sigBs = TextUtils.join("", sigB);
 		return new String[] { sigAs, sigBs };
-	}*/
+	}
     
 	/*
      * method reverseArray(String[] a) adapted from Stack Overflow:
@@ -1374,12 +1376,12 @@ public class ShareActivity extends Activity {
     	return a;
     }
     
-    /*private String[] swap(String[] a, int b) {
+    private String[] swap(String[] a, int b) {
     	String c = a[0];
     	a[0] = a[b%a.length];
     	a[b] = c;
     	return a;
-    }*/
+    }
 
 	private class AsyncSizeQuery extends AsyncTask<String, Void, String> {
     	
